@@ -87,7 +87,7 @@ const LoginForm = () => {
             </div>
             <div className="flex items-center">
               <p className="text-4xl font-bold font-cursive text-black">
-                neXus
+                Realmz
               </p>
             </div>
           </div>
