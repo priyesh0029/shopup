@@ -13,17 +13,10 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 import { login } from "../../api/auth";
-// import { setToken } from "../../../features/redux/slices/user/tokenSlice";
-// import {
-//   login,
-//   loginThroughEmailCheck,
-// } from "../../../api/apiConnections/User/authConnections";
-// import { SetUserInfo } from "../../../features/redux/slices/user/homeSlice";
-// import { useState } from "react";
-// import { POST_URL } from "../../../constants/constants";
-// import { auth, provider } from "../../../constants/firebaseAuth";
-// import { signInWithPopup } from "firebase/auth";
-// import UnameModal from "./UnameModal";
+import { setToken } from "../../Features/redux/slices/user/tokenSlice";
+import { SetUserInfo } from "../../Features/redux/slices/user/homeSlice";
+import { REALM_LOGO } from "../../constants";
+
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -41,16 +34,16 @@ const LoginForm = () => {
     console.log("data of user login = ", userData);
     let response = await login(userData);
     console.log("data of user login = ", response);
-    // if (response.status === "success") {
-    //   const token = response.userInfo.token;
-    //   const user = response.userInfo.user;
-    //   console.log(token);
-    //   dispatch(setToken(token));
-    //   dispatch(SetUserInfo(user));
-    //   navigate("/");
-    // } else {
-    //   console.log("signUp failed");
-    // }
+    if (response.status) {
+      const token = response.userInfo.token;
+      const user = response.userInfo.user;
+      console.log(token);
+      dispatch(setToken(token));
+      dispatch(SetUserInfo(user));
+      navigate("/");
+    } else {
+      console.log("signUp failed");
+    }
   };
 
   const formik = useFormik({
@@ -81,7 +74,7 @@ const LoginForm = () => {
             <div className="w-16 h-16 ">
               <img
                 className="border rounded-xl"
-                // src={POST_URL + "logo/nexuswhite.jpg"}
+                 src={REALM_LOGO}
                 alt="logo"
               />
             </div>

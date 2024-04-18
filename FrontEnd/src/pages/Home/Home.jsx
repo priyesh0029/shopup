@@ -1,11 +1,14 @@
 import React from "react";
+import NavbarComp from "../../components/Home/NavBar";
+import Feeds from "../../components/Home/Feeds";
 
 
 const Home = () => {
 
     return (
       <div className="">
-          <p>this is home</p>
+         <NavbarComp/>
+         <Feeds/>
       </div>
     );
   };

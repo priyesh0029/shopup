@@ -16,9 +16,7 @@ export const authControllers = {
       throw new AppError("User with the same email or username already exists",401);
     }
 
-    // Hash the password using bcryptjs
     const hashedPassword = await authServices.encryptPassword(password)
-    // Create a new user record in the database
     const newUser = await User.create({
       name,
       username,
@@ -27,9 +25,7 @@ export const authControllers = {
       password: hashedPassword,
     });
 
-    const token = await authServices.generateToken({ userId: newUser._id })
-
-    // Send success response with user data and token
+    const token = await authServices.generateToken({id:newUser._id.toString(),role:"user"})
     res.status(201).json({
       success: true,
       data: {
@@ -48,8 +44,6 @@ export const authControllers = {
  loginUser : asyncHandler(async (req, res) => {
     console.log( "login user controller : ", req.body);
   const { loginCredential, password } = req.body;
-
-  // Find user by email, username, or phone number
   const user = await User.findOne({
     $or: [{ email: loginCredential }, { username: loginCredential }, { number: loginCredential }],
   });
@@ -57,8 +51,6 @@ export const authControllers = {
   if (!user) {
     throw new AppError("Invalid login credentials",401);
   }
-
-  // Compare passwords
   const isPasswordMatch = await authServices.comparePassword(password, user.password);
 
   if (!isPasswordMatch) {
@@ -66,9 +58,8 @@ export const authControllers = {
   }
 
   // Generate JWT token
-  const token = await authServices.generateToken({ userId: user._id })
+  const token = await authServices.generateToken({id:user._id.toString(),role:"user"})
 
-  // Send success response with user data and token
   res.status(200).json({
     success: true,
     data: {

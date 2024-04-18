@@ -19,7 +19,7 @@ export const register = async (userData )=> {
             user: {
               _id: response.data.data.user._id,
               name: response.data.data.user.name,
-              userName: response.data.data.user.userName,
+              userName: response.data.data.user.username,
               email: response.data.data.user.email,
             },
           },
@@ -36,7 +36,7 @@ export const register = async (userData )=> {
         error?.response?.data?.message ||
         "An error occurred during registration";
       toast.error(errorMessage);
-      throw new Error(errorMessage); // Throw the error to be caught by the caller
+      throw new Error(errorMessage);
     }
   };
 
@@ -58,7 +58,7 @@ export const register = async (userData )=> {
             user: {
               _id: response.data.data.user._id,
               name: response.data.data.user.name,
-              userName: response.data.data.user.userName,
+              userName: response.data.data.user.username,
               email: response.data.data.user.email,
             },
           },
@@ -76,6 +76,6 @@ export const register = async (userData )=> {
         "something went wrong! try again.";
       console.log("response error : ", errorMessage);
       toast.error(errorMessage);
-      throw new Error(errorMessage); // Throw the error to be caught by the caller
+      throw new Error(errorMessage);
     }
   };

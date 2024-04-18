@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { register } from "../../api/auth";
 import { setToken } from "../../Features/redux/slices/user/tokenSlice";
 import { SetUserInfo } from "../../Features/redux/slices/user/homeSlice";
+import { REALM_LOGO } from "../../constants";
 // import { POST_URL } from "../../../constants/constants";
 
 const SignUpForm = () => {
@@ -86,7 +87,7 @@ const SignUpForm = () => {
             <div className="w-16 h-16 ">
               <img
                 className="border rounded-xl"
-                // src={POST_URL + "logo/nexuswhite.jpg"}
+                src={REALM_LOGO}
                 alt="logo"
               />
             </div>
