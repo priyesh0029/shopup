@@ -120,6 +120,8 @@ export const postController = {
             description: 1,
             imgNames: 1,
             caption: 1,
+            createdAt :1,
+            updatedAt :1
           },
         },
       ]);

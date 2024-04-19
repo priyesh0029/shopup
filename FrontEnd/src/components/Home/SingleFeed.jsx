@@ -1,4 +1,10 @@
-import { Avatar, Card, CardHeader, Carousel, Tooltip } from "@material-tailwind/react";
+import {
+  Avatar,
+  Card,
+  CardHeader,
+  Carousel,
+  Tooltip,
+} from "@material-tailwind/react";
 
 import {
   BookmarkIcon as SolidBookmarkIcon,
@@ -28,8 +34,8 @@ const SingleFeed = (props) => {
   const handleOpen = () => setviewPost(!viewPost);
 
   //edit feed
-  const [initialData, setinitialData] = useState({})
-  const [openEdit, setopenEdit] = useState(false)
+  const [initialData, setinitialData] = useState({});
+  const [openEdit, setopenEdit] = useState(false);
   const handleEditPost = () => {
     const intaialData = {
       postedUser,
@@ -37,74 +43,70 @@ const SingleFeed = (props) => {
       description,
       caption,
       createdAt,
-      _id
+      _id,
     };
-    setinitialData(()=>intaialData)
+    setinitialData(() => intaialData);
     setopenEdit(() => !openEdit);
-    handleOpen()
+    handleOpen();
   };
 
   return (
     <>
-    <Tooltip content="click the decription to view the full details..">
-      <Card
-        className="mt-6 pt-8 border-1 rounded-md border-black flex flex-col "
-        key={_id}
-      >
-        <CardHeader className="relative rounded-sm h-full">
-          <div className="flex items-start justify-between">
-            <div className="flex">
-              <UserCircleIcon className="h-10 w-10 text-gray-700" />
-              <div className="flex items-start">
+      <Tooltip content="click the decription to view the full details..">
+        <Card className="mt-6 border-1 rounded-md border-black flex flex-col w-full md:max-w-md lg:max-w-lg">
+          <CardHeader className="relative rounded-sm h-64 md:h-72 lg:h-80">
+              <div className="flex justify-between px-2">
+               <div className="flex">
+               <UserCircleIcon className="h-10 w-10 text-gray-700" />
                 <p className="text-md font-bold">{postedUser} .</p>
-
-                <p className="text-sm p-1">
-                  {moment(createdAt).startOf("minutes").fromNow()}
-                </p>
+               </div>
+                <div className="flex ">
+                  <p className="text-sm p-1">
+                    {moment(createdAt).startOf("minutes").fromNow()}
+                  </p>
+                </div>
               </div>
-            </div>
-            
-            {openEdit && (
-              <SaleModal
-                open={openEdit}
-                setOpen={setopenEdit}
-                initialData={initialData}
-                allPost={allPost}
-                setAllPost={setAllPost}
-              />
-            )}
-            {viewPost && (
-              <ViewSalePost
-                open={viewPost}
-                setOpen={setviewPost}
-                caption={caption}
-                createdAt={createdAt}
-                description={description}
-                imgNames={imgNames}
-                postedUser={postedUser}
-                handleEditPost={handleEditPost}
-                postId={_id}
-                allPost={allPost}
-                setAllPost={setAllPost}
-              />
-            )}
-          </div>
-          <Carousel className="rounded-sm items-center">
-            {imgNames.map((pic) => (
-              <img
-                src={POST_URL + `${pic}.jpg`}
-                alt="image 1"
-                className="h-full w-full object-cover"
-                key={pic}
-              />
-            ))}
-          </Carousel>
-        </CardHeader>
 
-        <div className="py-5 px-5 flex flex-col " onClick={handleOpen}>
-          <p className="text-lg font-semibold text-black">{caption}</p>
-        </div>
-      </Card>
+              {openEdit && (
+                <SaleModal
+                  open={openEdit}
+                  setOpen={setopenEdit}
+                  initialData={initialData}
+                  allPost={allPost}
+                  setAllPost={setAllPost}
+                />
+              )}
+              {viewPost && (
+                <ViewSalePost
+                  open={viewPost}
+                  setOpen={setviewPost}
+                  caption={caption}
+                  createdAt={createdAt}
+                  description={description}
+                  imgNames={imgNames}
+                  postedUser={postedUser}
+                  handleEditPost={handleEditPost}
+                  postId={_id}
+                  allPost={allPost}
+                  setAllPost={setAllPost}
+                />
+              )}
+            <Carousel className="rounded-sm items-center">
+              {imgNames.map((pic) => (
+                <img
+                  src={POST_URL + `${pic}.jpg`}
+                  alt="image 1"
+                  className="h-full w-full object-cover"
+                  key={pic}
+                />
+              ))}
+            </Carousel>
+          </CardHeader>
+
+          <div className="py-5 px-5 flex flex-col " onClick={handleOpen}>
+            <p className="text-lg font-semibold text-black">{caption}</p>
+          </div>
+        </Card>
       </Tooltip>
     </>
   );

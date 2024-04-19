@@ -35,8 +35,8 @@ const Feeds = () => {
   return (
     <div className="flex flex-col w-full h-full justify-center">
       <div className="flex items-center flex-col">
-        <p className="pt-5 text-xl font-semibold">Fresh Recommendations</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:px-32">
+        <p className="py-12 text-xl font-semibold">Fresh Recommendations</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-6 xl:px-32 ">
           {allPost.map((post) => (
             <div key={post._id}>
               <SingleFeed {...post} allPost={allPost} setAllPost={setAllPost} />

@@ -88,7 +88,7 @@ const NavBarComp = () => {
           Realmz
         </Typography>
 
-        {/* <div className="hidden items-center gap-x-2 lg:flex">
+        <div className="hidden items-center gap-x-2 lg:flex">
           <div className="relative flex w-full gap-2 md:w-max">
             <Input
               type="search"
@@ -126,7 +126,7 @@ const NavBarComp = () => {
           <Button size="md" className="rounded-lg ">
             Search
           </Button>
-        </div> */}
+        </div>
         <div className="hidden lg:block">{navList}</div>
         <Button color="blue" size = {"sm"} onClick={handleOpen}>SELL</Button>
         <IconButton
@@ -170,7 +170,7 @@ const NavBarComp = () => {
       <Collapse open={openNav}>
         <div className="container mx-auto">
           {navList}
-          {/* <div className="flex flex-col gap-x-2 sm:flex-row sm:items-center">
+          <div className="flex flex-col gap-x-2 sm:flex-row sm:items-center">
             <div className="relative w-full gap-2 md:w-max">
               <Input
                 type="search"
@@ -208,7 +208,7 @@ const NavBarComp = () => {
             <Button size="md" className="mt-1 rounded-lg sm:mt-0">
               Search
             </Button>
-          </div> */}
+          </div>
         </div>
       </Collapse>
       {open && (<SaleModal open={open} setOpen={setOpen}/>)}
