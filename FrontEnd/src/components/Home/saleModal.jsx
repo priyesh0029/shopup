@@ -19,7 +19,8 @@ import {
 } from "../../Features/redux/slices/user/postSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../api/post";
-import { POST_URL } from "../../constants";
+import { POST_URL } from "../../constants/mainUrls"
+
 
 const SaleModal = ({ open, setOpen, initialData = {},allPost ,setAllPost}) => {
   const handleOpen = () => setOpen(!open);
@@ -28,6 +29,7 @@ const SaleModal = ({ open, setOpen, initialData = {},allPost ,setAllPost}) => {
   const [imageArr, setimageArr] = useState([]);
   const handleFileChange = (event) => {
     const selectedFiles = event.target.files;
+    console.log(selectedFiles);
     if (selectedFiles) {
       const filesArray = Object.values(selectedFiles);
       dispatch(setMedia(filesArray));

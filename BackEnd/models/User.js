@@ -5,8 +5,11 @@ const userSchema = new mongoose.Schema({
   username: String,
   number: String,
   email: String,
+  role : String,
+  location: Object,
   password: String,
-});
+},
+{ timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 

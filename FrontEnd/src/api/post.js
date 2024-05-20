@@ -1,5 +1,5 @@
 
-import baseURL from "./api";
+import baseURL from "./Interceptors/userInterceptor";
 import { toast } from "react-toastify";
 
 export const createPost = async (post)=> {

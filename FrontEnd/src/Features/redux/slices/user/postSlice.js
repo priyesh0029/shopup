@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const createPostSlice = createSlice({
   name: "createPost",
   initialState: {
     media: [],
     caption: "",
-    desc :"",
+    price: "",
+    desc: "",
     newPost: {},
   },
   reducers: {
@@ -16,18 +16,24 @@ const createPostSlice = createSlice({
     setCaption: (state, action) => {
       state.caption = action.payload;
     },
+    setPrice: (state, action) => {
+      state.price = action.payload;
+    },
     setDesc: (state, action) => {
-        state.desc = action.payload;
-      },
+      state.desc = action.payload;
+    },
     clearMedia: (state) => {
       state.media = [];
     },
     clearCaption: (state) => {
       state.caption = "";
     },
+    clearPrice: (state) => {
+      state.caption = "";
+    },
     clearDesc: (state) => {
-        state.desc = "";
-      },
+      state.desc = "";
+    },
     setNewPost: (state, action) => {
       state.newPost = action.payload;
     },
@@ -37,7 +43,17 @@ const createPostSlice = createSlice({
   },
 });
 
-export const { setMedia, setCaption,setDesc, clearMedia, clearCaption,clearDesc, setNewPost,clearNewPost } =
-  createPostSlice.actions;
+export const {
+  setMedia,
+  setCaption,
+  setPrice,
+  setDesc,
+  clearMedia,
+  clearPrice,
+  clearCaption,
+  clearDesc,
+  setNewPost,
+  clearNewPost,
+} = createPostSlice.actions;
 
 export default createPostSlice.reducer;

@@ -1,20 +1,27 @@
 import { Schema, model } from "mongoose";
 
 // Schema of Post
-const postSchema = new Schema(
+const ProductSchema = new Schema(
   {
-    postedUser: {
+    shopOwnerId: {
+      type: String,
+      required: true,
+    },
+    categoryId: {
       type: String,
       required: true,
     },
     caption: {
       type: String,
     },
+    price: {
+      type: Number,
+    },
     description: {
       type: String,
     },
     imgNames: Array,
-    postDeleted: {
+    isDeleted: {
       type: Boolean,
       default: false,
       required: true,
@@ -22,5 +29,5 @@ const postSchema = new Schema(
   },
   { timestamps: true }
 );
-const Post = model("Post", postSchema);
-export default Post;
+const Product = model("Product", ProductSchema);
+export default Product;

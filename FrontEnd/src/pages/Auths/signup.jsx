@@ -1,37 +1,62 @@
-
-
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { Input, Button, Typography } from "@material-tailwind/react";
+import {
+  Input,
+  Button,
+  Typography,
+  Select,
+  Option,
+} from "@material-tailwind/react";
 import loadash from "lodash";
 import "react-toastify/dist/ReactToastify.css";
-import { register } from "../../api/auth";
+import { register, shopRegister } from "../../api/Auth/auth";
 import { setToken } from "../../Features/redux/slices/user/tokenSlice";
 import { SetUserInfo } from "../../Features/redux/slices/user/homeSlice";
-import { REALM_LOGO } from "../../constants";
+import { POST_URL2, REALM_LOGO } from "../../constants/mainUrls";
+import { Autocomplete } from "@react-google-maps/api";
+import { locationDetailsGenerator } from "../../constants/locationGenerator";
+import { setShopToken } from "../../Features/redux/slices/shopOwner/shopOwnerToken";
 // import { POST_URL } from "../../../constants/constants";
 
-const SignUpForm = () => {
+const SignUpForm = ({ isLoaded, loadError }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [role, setrole] = useState("");
+  const [locationName, setlocationName] = useState("");
+  const [locationCoord, setlocationCoord] = useState("");
 
   const submitHandler = async (userData) => {
-    console.log("userdata : ",userData);
-    let response = await register(userData);
-    if (response.status) {
-        console.log("data of user response = ", response);
-      const token = response.userInfo.token;
-      const user = response.userInfo.user;
-      console.log(token);
-      dispatch(setToken(token));
-      dispatch(SetUserInfo(user));
-      navigate("/");
+    console.log("userdata : ", userData);
+    if (role === "shopOwner") {
+      let response = await shopRegister(userData);
+      if (response.status) {
+        console.log("data of shop owner response = ", response);
+        const token = response.userInfo.token;
+        const user = response.userInfo.user;
+        console.log(token);
+        dispatch(setShopToken(token));
+        dispatch(SetUserInfo(user));    //should do later while creating shoupownwr ui
+        navigate("/shopdashboard");
+      } else {
+        console.log("signUp failed");
+      }
     } else {
-      console.log("signUp failed");
+      let response = await register(userData);
+      if (response.status) {
+        console.log("data of user response = ", response);
+        const token = response.userInfo.token;
+        const user = response.userInfo.user;
+        console.log(token);
+        dispatch(setToken(token));
+        dispatch(SetUserInfo(user));
+        navigate("/");
+      } else {
+        console.log("signUp failed");
+      }
     }
   };
 
@@ -40,12 +65,32 @@ const SignUpForm = () => {
     formik.setFieldValue("number", mobileValue);
   };
 
+  //location coordinates
+  const autocompleteRef = useRef(null);
+
+  const handleOriginSelect = () => {
+    let place = autocompleteRef.current.getPlace();
+    if (place) {
+      const fromCoord = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng(),
+      };
+      setlocationCoord(() => fromCoord);
+      const locationName = locationDetailsGenerator(place);
+      setlocationName(() => locationName.address);
+      console.log("places  ", fromCoord, locationName.address);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       name: "",
       username: "",
       number: "",
       email: "",
+      role: "",
+      address: "",
+      location: locationName,
       password: "",
       rePassword: "",
     },
@@ -57,6 +102,11 @@ const SignUpForm = () => {
         .max(20, "*Must be less than 20 characters")
         .required("*Required"),
       email: Yup.string().email("*Invalid email address").required("*Required"),
+      // role: Yup.string().required("*Role is required"),
+      ...(role === "shopOwner" && {
+        address: Yup.string().required("*Address is required"),
+        location: Yup.string().required("*Location is required"),
+      }),
       password: Yup.string()
         .min(1, "*Must be 8 characters or more")
         .required("*Required"),
@@ -74,28 +124,32 @@ const SignUpForm = () => {
     }),
     onSubmit: async (values, { setSubmitting }) => {
       const data = loadash.omit(values, "rePassword");
+      console.log("data = ", data);
+      if (role === "shopOnwer") {
+        data.location = locationCoord;
+      }
       submitHandler(data);
       setSubmitting(false);
     },
   });
 
   return (
-    <div className="flex justify-center">
-      <div className="flex w-100 mt-16 pt-8 items-center justify-center flex-col border-2 border-gray-400 rounded-xl">
+    <div className="flex justify-center w-full h-full mb-5">
+      <div className="flex w-fit h-fit mt-16 pt-8 items-center justify-center flex-col border-2 border-gray-400 rounded-xl">
         <div>
           <div className="flex justify-center gap-2">
-            <div className="w-16 h-16 ">
+            <div className="w-36 h-16 ">
               <img
-                className="border rounded-xl"
-                src={REALM_LOGO}
+                className="border rounded-xl w-full h-full"
+                src={POST_URL2}
                 alt="logo"
               />
             </div>
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <p className="text-4xl font-bold font-cursive text-black">
-                RealmZ
+                ShopUp
               </p>
-            </div>
+            </div> */}
           </div>
           <ToastContainer position="bottom-left" />
         </div>
@@ -116,7 +170,6 @@ const SignUpForm = () => {
                     <Input
                       type="text"
                       id="name"
-                      size="lg"
                       label="Name"
                       {...formik.getFieldProps("name")}
                     />
@@ -131,7 +184,6 @@ const SignUpForm = () => {
                     <Input
                       type="text"
                       id="username"
-                      size="lg"
                       label="Username"
                       {...formik.getFieldProps("username")}
                     />
@@ -146,7 +198,6 @@ const SignUpForm = () => {
                 <Input
                   type="text"
                   id="number"
-                  size="lg"
                   label="Phone Number"
                   value={formik.values.number}
                   onChange={mobileNumberHandle}
@@ -161,7 +212,6 @@ const SignUpForm = () => {
                 <Input
                   type="email"
                   id="email"
-                  size="lg"
                   label="E-mail"
                   {...formik.getFieldProps("email")}
                 />
@@ -170,30 +220,115 @@ const SignUpForm = () => {
                     ? formik.errors.email
                     : null}
                 </p>
-                <Input
-                  type="password"
-                  id="password"
-                  size="lg"
-                  label="Password"
-                  {...formik.getFieldProps("password")}
-                />
+
+                <Select
+                  label="Select your role"
+                  id="role"
+                  // {...formik.getFieldProps("role")}
+                  value={formik.values.role}
+                  onChange={(val) => {
+                    console.log("rolevalue: ", val);
+                    formik.setFieldValue("role", val);
+                    formik.setFieldTouched("role", true);
+                    setrole(val);
+                  }}
+                >
+                  <Option value="">Select...</Option>
+                  <Option value="customer">Customer</Option>
+                  <Option value="shopOwner">Shop Owner</Option>
+                </Select>
                 <p className="h-4 ml-2 text-xs text-red-800">
-                  {formik.touched.password && formik.errors.password
-                    ? formik.errors.password
-                    : null}
+                  {formik.touched.role && formik.errors.role ? null : null}
                 </p>
-                <Input
-                  type="password"
-                  id="rePassword"
-                  size="lg"
-                  label="Re-type Password"
-                  {...formik.getFieldProps("rePassword")}
-                />
-                <p className="h-4 ml-2 text-xs text-red-800">
-                  {formik.touched.rePassword && formik.errors.rePassword
-                    ? formik.errors.rePassword
-                    : null}
-                </p>
+                {role.length !== 0 && (
+                  <div>
+                    {role && role === "shopOwner" && (
+                      <div>
+                        <Input
+                          type="text"
+                          id="address"
+                          label="Address"
+                          {...formik.getFieldProps("address")}
+                        />
+                        <p className="h-6 ml-2 text-xs text-red-800">
+                          {role &&
+                          role === "shopOwner" &&
+                          formik.touched.address &&
+                          formik.errors.address
+                            ? formik.errors.address
+                            : null}
+                        </p>
+                        {!isLoaded ? (
+                          <div>Loading...</div>
+                        ) : (
+                          <div>
+                            <Autocomplete
+                              onLoad={(autocomplete) => {
+                                autocompleteRef.current = autocomplete;
+                              }}
+                              onPlaceChanged={handleOriginSelect}
+                            >
+                              <>
+                                <Input
+                                  type="text"
+                                  id="location"
+                                  label="Location"
+                                  value={
+                                    locationName
+                                      ? locationName
+                                      : formik.values.location
+                                  }
+                                  onChange={(e) => {
+                                    formik.setFieldValue(
+                                      "location",
+                                      e.target.value
+                                    );
+                                  }}
+                                  onKeyDown={(e) =>
+                                    e.key === "Backspace" &&
+                                    setlocationName("") &&
+                                    setlocationCoord("")
+                                  }
+                                  onBlur={formik.handleBlur("location")}
+                                />
+                                <p className="h-6 ml-2 text-xs text-red-800">
+                                  {role &&
+                                  role === "shopOwner" &&
+                                  formik.touched.location &&
+                                  formik.errors.location
+                                    ? formik.errors.location
+                                    : null}
+                                </p>
+                              </>
+                            </Autocomplete>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    <Input
+                      type="password"
+                      id="password"
+                      label="Password"
+                      {...formik.getFieldProps("password")}
+                    />
+                    <p className="h-4 ml-2 text-xs text-red-800">
+                      {formik.touched.password && formik.errors.password
+                        ? formik.errors.password
+                        : null}
+                    </p>
+                    <Input
+                      type="password"
+                      id="rePassword"
+                      label="Re-type Password"
+                      {...formik.getFieldProps("rePassword")}
+                    />
+                    <p className="h-4 ml-2 text-xs text-red-800">
+                      {formik.touched.rePassword && formik.errors.rePassword
+                        ? formik.errors.rePassword
+                        : null}
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div className="flex w-24 ml-44">

@@ -1,7 +1,7 @@
 {
-  "name": "realmz_backend",
+  "name": "shopup_backend",
   "version": "1.0.0",
-  "description": "realmz backend",
+  "description": "shopup backend",
   "main": "app.js",
   "type": "module",
   "scripts": {

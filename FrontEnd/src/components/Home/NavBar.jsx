@@ -16,6 +16,7 @@ import SaleModal from "./saleModal";
 import { useDispatch, useSelector } from "react-redux";
 import { clearToken } from "../../Features/redux/slices/user/tokenSlice";
 import { clearUserInfo } from "../../Features/redux/slices/user/homeSlice";
+import { POST_URL2 } from "../../constants/mainUrls";
 
 const NavBarComp = () => {
   const dispatch = useDispatch();
@@ -80,13 +81,13 @@ const NavBarComp = () => {
       fullWidth={true}
     >
       <div className="container mx-auto flex flex-wrap items-center justify-between text-blue-gray-900">
-        <Typography
-          as="a"
-          href="#"
-          className="mr-4 cursor-pointer py-1.5 font-extrabold text-xl"
-        >
-          Realmz
-        </Typography>
+       <div className="w-36 h-16 ">
+            <img
+              className="border rounded-xl w-full h-full"
+              src={POST_URL2}
+              alt="logo"
+            />
+          </div>
 
         <div className="hidden items-center gap-x-2 lg:flex">
           <div className="relative flex w-full gap-2 md:w-max">

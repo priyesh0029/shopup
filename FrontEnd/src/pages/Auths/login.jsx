@@ -10,49 +10,78 @@ import {
   Typography,
   Input,
   Button,
+  Option,
+  Select,
 } from "@material-tailwind/react";
 import { useState } from "react";
-import { login } from "../../api/auth";
+import { adminLogin, login, shopLogin } from "../../api/Auth/auth";
 import { setToken } from "../../Features/redux/slices/user/tokenSlice";
 import { SetUserInfo } from "../../Features/redux/slices/user/homeSlice";
-import { REALM_LOGO } from "../../constants";
-
+import { POST_URL2, REALM_LOGO } from "../../constants/mainUrls";
+import { setShopToken } from "../../Features/redux/slices/shopOwner/shopOwnerToken";
+import { setAdminToken } from "../../Features/redux/slices/admin/adminTokenSlice";
+import { SetShopInfo } from "../../Features/redux/slices/shopOwner/shopInfoSlice";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [userData, setuserData] = useState({
-    name: "",
-    email: "",
-  });
-
-
-
-
+  
+  const [role, setrole] = useState("");
 
   const submitHandler = async (userData) => {
     console.log("data of user login = ", userData);
-    let response = await login(userData);
-    console.log("data of user login = ", response);
-    if (response.status) {
-      const token = response.userInfo.token;
-      const user = response.userInfo.user;
-      console.log(token);
-      dispatch(setToken(token));
-      dispatch(SetUserInfo(user));
-      navigate("/");
-    } else {
-      console.log("signUp failed");
+    if (role === "customer") {
+      let response = await login(userData);
+      console.log("data of user login = ", response);
+      if (response.status) {
+        const token = response.userInfo.token;
+        const user = response.userInfo.user;
+        console.log(token);
+        dispatch(setToken(token));
+        dispatch(SetUserInfo(user));
+        navigate("/");
+      } else {
+        console.log("signUp failed");
+      }
+    } else if (role === "shopOwner") {
+      let response = await shopLogin(userData);
+      console.log("data of user login = ", response);
+      if (response.status) {
+        const token = response.userInfo.token;
+        const user = response.userInfo.user;
+        console.log(token);
+        dispatch(setShopToken(token));
+        dispatch(SetShopInfo(user));    //should do later while creating shoupownwr ui
+        navigate("/shopdashboard");
+      } else {
+        console.log("signUp failed");
+      }
+    } else if (role === "admin") {
+      let response = await adminLogin(userData);
+      console.log("data of user login = ", response);
+      if (response.status) {
+        const token = response.userInfo.token;
+        const user = response.userInfo.user;
+        console.log(token);
+        dispatch(setAdminToken(token));
+        // dispatch(SetUserInfo(user));    //should do later while creating Admin ui
+        navigate("/admindashboard");
+      } else {
+        console.log("signUp failed");
+      }
     }
   };
 
   const formik = useFormik({
     initialValues: {
-        loginCredential: "",
+      role: "",
+      loginCredential: "",
       password: "",
     },
     validationSchema: Yup.object({
-        loginCredential: Yup.string()
+      role: Yup.string().required("*Role is required"),
+
+      loginCredential: Yup.string()
         .max(20, "Must be less than 20 characters")
         .required("Required"),
       password: Yup.string()
@@ -67,22 +96,18 @@ const LoginForm = () => {
   });
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center w-full h-full mb-5">
       <div className="flex w-100 mt-16 pt-12 items-center justify-center flex-col border-2 border-gray-400 rounded-xl">
         <div>
           <div className="flex justify-center gap-2">
-            <div className="w-16 h-16 ">
-              <img
-                className="border rounded-xl"
-                 src={REALM_LOGO}
-                alt="logo"
-              />
+            <div className="w-36 h-16 ">
+              <img className="border rounded-xl w-full h-full" src={POST_URL2} alt="logo" />
             </div>
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <p className="text-4xl font-bold font-cursive text-black">
-                Realmz
+                ShopUp
               </p>
-            </div>
+            </div> */}
           </div>
           <ToastContainer position="bottom-left" />
         </div>
@@ -92,7 +117,29 @@ const LoginForm = () => {
               Login
             </Typography>
 
-            <CardBody className="flex flex-col gap-2">
+            <CardBody className="flex flex-col gap-1">
+              <Select
+                label="Select your role"
+                id="role"
+                // {...formik.getFieldProps("role")}
+                value={role ? role : formik.values.role}
+                onChange={(val) => {
+                  console.log("rolevalue: ", val);
+                  formik.setFieldValue("role", val);
+                  formik.setFieldTouched("role", true);
+                  setrole(val);
+                }}
+              >
+                <Option value="">Select...</Option>
+                <Option value="customer">Customer</Option>
+                <Option value="shopOwner">Shop Owner</Option>
+                <Option value="admin">Admin</Option>
+              </Select>
+              <p className="h-4 ml-2 text-xs text-red-800">
+                {formik.touched.role && formik.errors.role
+                  ? formik.errors.role
+                  : null}
+              </p>
               <Input
                 type="text"
                 label="User Name"
@@ -118,16 +165,11 @@ const LoginForm = () => {
                   ? formik.errors.password
                   : null}
               </p>
-              {/* <div className="-ml-2.5"> */}
-              {/* <Checkbox label="Remember Me" /> */}
-              {/* </div> */}
             </CardBody>
             <CardFooter className="pt-0">
               <Button type="submit" color="blue" variant="gradient" fullWidth>
                 Sign In
               </Button>
-
-              
             </CardFooter>
             <Typography
               color="gray"

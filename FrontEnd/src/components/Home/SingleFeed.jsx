@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { POST_URL } from "../../constants";
+import { POST_URL } from "../../constants/mainUrls"
 import ViewSalePost from "./ViewSalePost";
 import SaleModal from "./saleModal";
 

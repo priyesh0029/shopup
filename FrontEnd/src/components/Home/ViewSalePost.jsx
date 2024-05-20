@@ -9,7 +9,7 @@ import {
   Tooltip,
   CardBody,
 } from "@material-tailwind/react";
-import { POST_URL } from "../../constants";
+import { POST_URL } from "../../constants/mainUrls"
 import moment from "moment";
 import SaleModal from "./saleModal";
 import { deletePost } from "../../api/post";

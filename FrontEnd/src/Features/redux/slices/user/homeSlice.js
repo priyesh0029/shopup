@@ -38,7 +38,7 @@ const homeSlice = createSlice({
       try {
         localStorage.setItem("userInfo", JSON.stringify(action.payload));
       } catch (error) {
-        console.log("Error storing token in local storage:", error);
+        console.log("Error storing userInfo in local storage:", error);
       }
     },
     //to clear local storage  while logout
@@ -52,7 +52,7 @@ const homeSlice = createSlice({
       try {
         localStorage.removeItem("userInfo");
       } catch (error) {
-        console.log("Error removing token from local storage:", error);
+        console.log("Error removing userInfo from local storage:", error);
       }
     },
   },
