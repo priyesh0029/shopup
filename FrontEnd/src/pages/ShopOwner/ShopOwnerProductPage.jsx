@@ -1,7 +1,7 @@
 import React from "react";
 import ShopOwnerNavbar from "../../components/ShopOwner/ShopOwnerNavbar";
-import ProductPage from "../../components/Product/ProductPage";
 import { useParams } from "react-router-dom";
+import ProductPage from "../../components/Product/ProductPage";
 
 const ShopOwnerProductPage = () => {
   const { category,catId } = useParams();
@@ -15,7 +15,7 @@ const ShopOwnerProductPage = () => {
         <p className="text-blue-900 font-extrabold text-3xl">{category} List</p>
       </div>
       <div className="flex flex-col border border-gray-100 rounded-2xl bg-gray-300 min-h-screen w-full h-full">
-        {/* <ProductPage category={category} catId={catId} role={"shop"} /> */}
+        <ProductPage category={category} catId={catId} role={"shop"} />
       </div>
       </div>
     </div>

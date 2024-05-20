@@ -7,7 +7,7 @@ import { uploadShopupProducts } from "../middlewares/multer.js";
 const shopOwnerRouter = (router) => {
     router.get('/getcategory',adminController.getCategory)
     router.post('/newproduct',uploadShopupProducts,productController.createNewProduct)
-    router.get('/getallProducts',productController.getAllproducts)
+    router.get('/getallProducts/:catId',productController.getAllproducts)
 
 
 

@@ -62,8 +62,8 @@ export const productController = {
   getAllproducts: asyncHandler(async (req, res) => {
     try {
       const userId = req.query.userId;
-      const {catId } = req.body;
-
+      const {catId } = req.params;
+      console.log(userId,catId);
       if (typeof userId !== "string") {
         return res
           .status(400)

@@ -128,7 +128,7 @@ const AddEditProduct = ({ open, setOpen, initialData = {},allPost ,setAllPost,ca
             dispatch(clearCaption());
             dispatch(clearDesc());
             dispatch(clearPrice())
-            dispatch(setNewPost(response.post));
+            dispatch(setNewPost(response.product));
             handleOpen();
           }
         }

@@ -3,33 +3,33 @@ import { useDispatch, useSelector } from "react-redux";
 import AddEditProduct from "./AddEditProduct";
 import { clearNewPost } from "../../Features/redux/slices/user/postSlice";
 import { getAllProducts } from "../../api/ShopOwner/shopOwnerProduct";
-// import SingleProduct from "./SingleProduct";
+import SingleProduct from "./SingleProduct";
 
-const ProductPage = ({ category,catId, role }) => {
+const ProductPage = ({ category, catId, role }) => {
   const [allPost, setAllPost] = useState([]);
   const [open, setopen] = useState(false);
   const dispatch = useDispatch();
   const newPost = useSelector((store) => store.createPost.newPost);
-  dispatch(clearNewPost())
-  console.log("newPost redux : ", newPost, category,catId);
+  console.log("newPost redux : ", newPost, category, catId);
 
   const user = useSelector((store) => store.home.userInfo);
 
-//   useEffect(() => {
-//     if (Object.keys(newPost).length === 0) {
-//       getProducts();
-//     } else {
-//       setAllPost([newPost, ...allPost]);
-//     }
-//   }, []);
+    useEffect(() => {
+      if (Object.keys(newPost).length === 0) {
+        getProducts();
+      } else {
+        setAllPost([newPost, ...allPost]);
+      }
+    }, [newPost]);
 
-//   const getProducts = async () => {
-//     const response = await getAllProducts(catId);
-//     if (response?.status === "success") {
-//       console.log("post  singlepost compo1111 : ", response.allPosts);
-//       setAllPost(response.allPosts);
-//     }
-//   };
+    const getProducts = async () => {
+      const response = await getAllProducts(catId);
+      if (response?.status === "success") {
+        console.log("post  singlepost compo1111 : ", response.allProducts);
+        setAllPost(()=>[])
+        setAllPost(response.allProducts);
+      }
+    };
 
   const handleOpen = () => {
     setopen(!open);
@@ -55,13 +55,13 @@ const ProductPage = ({ category,catId, role }) => {
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-6 xl:px-32 ">
           {allPost.map((post) => (
-              <div key={post._id}>
-                {/* <SingleProduct {...post} allPost={allPost} setAllPost={setAllPost} /> */}
-              </div>
-            ))}
+            <div key={post._id}>
+              <SingleProduct {...post} allPost={allPost} setAllPost={setAllPost} />
+            </div>
+          ))}
         </div>
       </div>
-      {/* {open && (
+      {open && (
         <AddEditProduct
           open={open}
           setOpen={setopen}
@@ -70,7 +70,7 @@ const ProductPage = ({ category,catId, role }) => {
           category={category}
           catId={catId}
         />
-      )} */}
+      )}
     </div>
   );
 };

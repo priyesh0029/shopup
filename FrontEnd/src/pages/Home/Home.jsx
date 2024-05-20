@@ -8,7 +8,7 @@ const Home = () => {
     return (
       <div className="">
          <NavbarComp/>
-         <Feeds/>
+         {/* <Feeds/> */}
       </div>
     );
   };

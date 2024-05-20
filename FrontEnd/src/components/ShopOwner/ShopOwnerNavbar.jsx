@@ -13,9 +13,9 @@ import {
   Collapse,
 } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearToken } from "../../Features/redux/slices/user/tokenSlice";
-import { clearUserInfo } from "../../Features/redux/slices/user/homeSlice";
 import { POST_URL2 } from "../../constants/mainUrls";
+import { clearShopToken } from "../../Features/redux/slices/shopOwner/shopOwnerToken";
+import { clearShopInfo } from "../../Features/redux/slices/shopOwner/shopInfoSlice";
 
 const ShopOwnerNavbar = () => {
   const dispatch = useDispatch();
@@ -34,8 +34,8 @@ const ShopOwnerNavbar = () => {
   const [open, setOpen] = useState(false);
 
   const handleLogout = () => {
-    dispatch(clearToken());
-    dispatch(clearUserInfo());
+    dispatch(clearShopToken());
+    dispatch(clearShopInfo());
   };
 
   const navList = (

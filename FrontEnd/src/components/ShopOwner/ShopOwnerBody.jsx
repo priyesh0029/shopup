@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { CATEGORY_URL } from "../../constants/mainUrls";
 import { getAllCategoriesShop } from "../../api/ShopOwner/shopOwnerCategory";
-import ProductPage from "../Product/ProductPage";
 import { useNavigate } from "react-router-dom";
 
 const ShopOwnerBody = () => {
   const [categories, setcategories] = useState([]);
-  const [open, setopen] = useState(false)
   const [catName, setcatName] = useState("")
 
   const navigate = useNavigate()
 
   const handleOpen = (category,catId)=>{
-    // setopen(!open)
-    // setcatName(category)
     navigate(`/productpage/${category}/${catId}`)
   }
 
@@ -64,7 +60,6 @@ const ShopOwnerBody = () => {
           ))}
         </div>
       </div>
-      {open && (<ProductPage category={catName} handleOpen={handleOpen}/>)}
     </div>
   );
 };
