@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 // import SinglePost from "../Post/SinglePost";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPost } from "../../api/post";
-import { clearNewPost } from "../../Features/redux/slices/user/postSlice";
+import { clearNewPost } from "../../Features/redux/slices/shopOwner/postSlice";
 import SingleFeed from "./SingleFeed";
 
 const Feeds = () => {

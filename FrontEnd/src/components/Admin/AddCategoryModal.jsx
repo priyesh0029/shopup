@@ -14,7 +14,7 @@ import {
   clearMedia,
   setCaption,
   setMedia,
-} from "../../Features/redux/slices/user/postSlice";
+} from "../../Features/redux/slices/shopOwner/postSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { creatCategotry } from "../../api/Admin/adminCategoty";
 

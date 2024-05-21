@@ -77,7 +77,7 @@ const NavBarComp = () => {
 
   return (
     <Navbar
-      className="mx-auto w-screen px-4 py-2 lg:px-8 lg:py-4"
+      className="mx-auto w-screen px-4 py-2 lg:px-8 lg:py-4  bg-transparent"
       fullWidth={true}
     >
       <div className="container mx-auto flex flex-wrap items-center justify-between text-blue-gray-900">
@@ -89,8 +89,8 @@ const NavBarComp = () => {
             />
           </div>
 
-        <div className="hidden items-center gap-x-2 lg:flex">
-          <div className="relative flex w-full gap-2 md:w-max">
+        {/* <div className="hidden items-center gap-x-2 lg:flex"> */}
+          {/* <div className="relative flex w-full gap-2 md:w-max">
             <Input
               type="search"
               placeholder="Search"
@@ -123,14 +123,12 @@ const NavBarComp = () => {
                 />
               </svg>
             </div>
-          </div>
-          <Button size="md" className="rounded-lg ">
-            Search
-          </Button>
-        </div>
-        <div className="hidden lg:block">{navList}</div>
-        <Button color="blue" size = {"sm"} onClick={handleOpen}>SELL</Button>
-        <IconButton
+          </div> */}
+          
+        {/* </div> */}
+        {/* <div className="hidden lg:block">{navList}</div> */}
+        {/* <Button color="blue" size = {"sm"} onClick={handleOpen}>SELL</Button> */}
+        {/* <IconButton
           variant="text"
           className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
           ripple={false}
@@ -166,9 +164,10 @@ const NavBarComp = () => {
               />
             </svg>
           )}
-        </IconButton>
+        </IconButton> */}
+          <div className="hidden lg:block">{navList}</div>
       </div>
-      <Collapse open={openNav}>
+      {/* <Collapse open={openNav}>
         <div className="container mx-auto">
           {navList}
           <div className="flex flex-col gap-x-2 sm:flex-row sm:items-center">
@@ -211,8 +210,7 @@ const NavBarComp = () => {
             </Button>
           </div>
         </div>
-      </Collapse>
-      {open && (<SaleModal open={open} setOpen={setOpen}/>)}
+      </Collapse> */}
     </Navbar>
   );
 };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddEditProduct from "./AddEditProduct";
-import { clearNewPost } from "../../Features/redux/slices/user/postSlice";
+import { clearNewPost } from "../../Features/redux/slices/shopOwner/postSlice";
 import { getAllProducts } from "../../api/ShopOwner/shopOwnerProduct";
 import SingleProduct from "./SingleProduct";
 

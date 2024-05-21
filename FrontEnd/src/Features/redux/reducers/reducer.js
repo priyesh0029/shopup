@@ -1,6 +1,6 @@
 import {combineReducers } from "redux"
 import homeSlice from "../slices/user/homeSlice.js"
-import createPostSlice from "../slices/user/postSlice.js"
+import createPostSlice from "../slices/shopOwner/postSlice.js"
 import tokenSlice from "../slices/user/tokenSlice.js"
 import shopTokenSlice from "../slices/shopOwner/shopOwnerToken.js"
 import adminTokenSlice from "../slices/admin/adminTokenSlice.js"

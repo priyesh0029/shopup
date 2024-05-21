@@ -21,7 +21,7 @@ export const adminController = {
   
         const newPost = new Category(categoryDetails);
         await newPost.save();
-  
+        adminController
         return res.status(201).json({
           success: true,
           message: "Post created successfully",

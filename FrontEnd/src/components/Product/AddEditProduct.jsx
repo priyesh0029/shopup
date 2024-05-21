@@ -18,7 +18,7 @@ import {
   setMedia,
   setNewPost,
   setPrice,
-} from "../../Features/redux/slices/user/postSlice";
+} from "../../Features/redux/slices/shopOwner/postSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../api/post";
 import { POST_URL } from "../../constants/mainUrls"

@@ -168,7 +168,7 @@ export const authControllers = {
     // Generate JWT token
     const token = await authServices.generateToken({
       id: user._id.toString(),
-      role: "user",
+      role: user.role,
     });
 
     res.status(200).json({

@@ -20,7 +20,7 @@ import { clearShopInfo } from "../../Features/redux/slices/shopOwner/shopInfoSli
 const ShopOwnerNavbar = () => {
   const dispatch = useDispatch();
   const [openNav, setOpenNav] = React.useState(false);
-  const user = useSelector((store) => store.home.userInfo);
+  const user = useSelector((store) => store.shopInfo.shopInfo);
 
   React.useEffect(() => {
     window.addEventListener(

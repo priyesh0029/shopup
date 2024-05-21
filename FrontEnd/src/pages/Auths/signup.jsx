@@ -20,6 +20,7 @@ import { POST_URL2, REALM_LOGO } from "../../constants/mainUrls";
 import { Autocomplete } from "@react-google-maps/api";
 import { locationDetailsGenerator } from "../../constants/locationGenerator";
 import { setShopToken } from "../../Features/redux/slices/shopOwner/shopOwnerToken";
+import { SetShopInfo } from "../../Features/redux/slices/shopOwner/shopInfoSlice";
 // import { POST_URL } from "../../../constants/constants";
 
 const SignUpForm = ({ isLoaded, loadError }) => {
@@ -39,7 +40,7 @@ const SignUpForm = ({ isLoaded, loadError }) => {
         const user = response.userInfo.user;
         console.log(token);
         dispatch(setShopToken(token));
-        dispatch(SetUserInfo(user));    //should do later while creating shoupownwr ui
+        dispatch(SetShopInfo(user));    //should do later while creating shoupownwr ui
         navigate("/shopdashboard");
       } else {
         console.log("signUp failed");
@@ -124,9 +125,9 @@ const SignUpForm = ({ isLoaded, loadError }) => {
     }),
     onSubmit: async (values, { setSubmitting }) => {
       const data = loadash.omit(values, "rePassword");
-      console.log("data = ", data);
-      if (role === "shopOnwer") {
+      if (role === "shopOwner") {
         data.location = locationCoord;
+        console.log("data = ", data);
       }
       submitHandler(data);
       setSubmitting(false);

@@ -78,6 +78,8 @@ export const productController = {
           .json({ success: false, message: "User not found" });
       }
 
+      console.log("user.username and catId : ",user.username,catId);
+
       const allProducts = await Product.aggregate([
         [
           {
@@ -92,7 +94,7 @@ export const productController = {
 
       console.log("Controllers all post response:", allProducts);
 
-      res.status(200).json({
+     return res.status(200).json({
         status: "success",
         allProducts,
       });
