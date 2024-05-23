@@ -21,7 +21,7 @@ import {
 } from "../../Features/redux/slices/shopOwner/postSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../api/post";
-import { POST_URL } from "../../constants/mainUrls"
+import { PRODUCT_URL } from "../../constants/mainUrls"
 import { createProduct } from "../../api/ShopOwner/shopOwnerProduct";
 
 
@@ -156,7 +156,7 @@ const AddEditProduct = ({ open, setOpen, initialData = {},allPost ,setAllPost,ca
                   <img
                     src={
                       Object.keys(initialData).length !== 0
-                        ? POST_URL + `${pic}`
+                        ? PRODUCT_URL + `${pic}`
                         : URL.createObjectURL(pic)
                     }
                     alt="image 1"

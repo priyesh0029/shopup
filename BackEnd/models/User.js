@@ -6,11 +6,15 @@ const userSchema = new mongoose.Schema({
   number: String,
   email: String,
   role : String,
-  location: Object,
+  location: {
+    type: { type: String, enum: ['Point'], required: true },
+    coordinates: { type: [Number], required: true }
+  },
   password: String,
 },
 { timestamps: true });
-
+userSchema.index({ location: '2dsphere' });
 const User = mongoose.model('User', userSchema);
+User.createIndexes(); 
 
 export default User;

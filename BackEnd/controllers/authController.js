@@ -30,7 +30,10 @@ export const authControllers = {
       email,
       role,
       address,
-      location,
+      location: {
+        type: 'Point',
+        coordinates: [parseFloat(location.lng), parseFloat(location.lat)]
+      },
       password: hashedPassword,
     });
     console.log("new user details after create : ", newUser);

@@ -48,7 +48,7 @@ const CustomerDashboard = () => {
   const saveLocation = async(locationCoord)=>{
     const response = await saveUserLocation(locationCoord)
     if(response.success){
-      toast.success(response.message)
+      // toast.success(response.message)
     }else{
       toast.error(response.message);
     }

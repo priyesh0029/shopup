@@ -3,12 +3,16 @@ import { CATEGORY_URL } from "../../constants/mainUrls";
 import { getAllCategoriesShop } from "../../api/ShopOwner/shopOwnerCategory";
 import { useNavigate } from "react-router-dom";
 import { getAllCategoriesCustomer } from "../../api/Customer/customerCategory";
+import { useDispatch } from "react-redux";
+import { clearNewPost } from "../../Features/redux/slices/shopOwner/postSlice";
 
 const CategoryPage = ({ role }) => {
   const [categories, setcategories] = useState([]);
   const [catName, setcatName] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  dispatch(clearNewPost())
 
   const handleOpen = (category, catId) => {
     if (role === "shopOwner") {

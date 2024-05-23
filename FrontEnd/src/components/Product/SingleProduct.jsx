@@ -14,7 +14,7 @@ import {
   import moment from "moment";
   import { useDispatch, useSelector } from "react-redux";
   import { Link } from "react-router-dom";
-  import { POST_URL } from "../../constants/mainUrls"
+  import { PRODUCT_URL } from "../../constants/mainUrls"
 //   import ViewSalePost from "./ViewSalePost";
 //   import SaleModal from "./saleModal";
 
@@ -97,7 +97,7 @@ const SingleProduct = (props) => {
               <Carousel className="rounded-sm items-center">
                 {imgNames.map((pic) => (
                   <img
-                    src={POST_URL + `${pic}.jpg`}
+                    src={PRODUCT_URL + `${pic}.jpg`}
                     alt="image 1"
                     className="h-full w-full object-cover"
                     key={pic}

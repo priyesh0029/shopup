@@ -9,6 +9,8 @@ import { useJsApiLoader } from "@react-google-maps/api";
 import ShopHome from "./pages/ShopOwner/ShopHome";
 import AdminHome from "./pages/Admin/AdminHome";
 import ShopOwnerProductPage from "./pages/ShopOwner/ShopOwnerProductPage";
+import CustomerProductPage from "./pages/Home/CustomerProductPage";
+import ProductViewPage from "./pages/Home/ProductViewPage";
 
 const libraries = ["places", "maps", "geometry"];
 
@@ -41,9 +43,12 @@ const App = () => {
           <Route path="/home" element={token ? <Home /> : <LoginForm />} />
           <Route
             path="/customerproductpage/:category?/:catId"
-            element={token ? <ShopOwnerProductPage /> : <LoginForm />}
+            element={token ? <CustomerProductPage /> : <LoginForm />}
           />
-
+          <Route
+            path="/productviewpage/:product"
+            element={token ? <ProductViewPage /> : <LoginForm />}
+          />
           {/* shopOwnerRoutes */}
           <Route
             path="/shopdashboard"

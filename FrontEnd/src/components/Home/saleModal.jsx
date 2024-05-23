@@ -19,7 +19,7 @@ import {
 } from "../../Features/redux/slices/shopOwner/postSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../api/post";
-import { POST_URL } from "../../constants/mainUrls"
+import { PRODUCT_URL } from "../../constants/mainUrls"
 
 
 const SaleModal = ({ open, setOpen, initialData = {},allPost ,setAllPost}) => {
@@ -137,7 +137,7 @@ const SaleModal = ({ open, setOpen, initialData = {},allPost ,setAllPost}) => {
                 <img
                   src={
                     Object.keys(initialData).length !== 0
-                      ? POST_URL + `${pic}`
+                      ? PRODUCT_URL + `${pic}`
                       : URL.createObjectURL(pic)
                   }
                   alt="image 1"
