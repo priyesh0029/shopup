@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { CATEGORY_URL, POST_URL2 } from "../../constants/mainUrls";
+import { CATEGORY_URL, POST_URL2 } from "../../../constants/mainUrls";
 import AddCategoryModal from "./AddCategoryModal";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { getAllCategories } from "../../api/Admin/adminCategoty";
+import { getAllCategories } from "../../../api/Admin/adminCategoty";
 
 const Categories = () => {
 

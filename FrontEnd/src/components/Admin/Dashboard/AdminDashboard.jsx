@@ -20,8 +20,11 @@ import {
 import { useDispatch } from "react-redux";
 // import { clearAdminTokenSlice } from "../../../features/redux/slices/admin/adminTokenSlice";
 import { useNavigate } from "react-router-dom";
-import { POST_URL2 } from "../../constants/mainUrls";
-import Categories from "./Categories";
+import { POST_URL2 } from "../../../constants/mainUrls";
+import Categories from "../AdminCategory/Categories";
+import DashBoardComponent from "./DashboardComponent";
+import UserTable from "../UserList/UserTable";
+import ProductList from "../ProductList/ProductList";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -38,19 +41,19 @@ const AdminDashboard = () => {
       label: "Dashboard",
       value: "dashboard",
       icon: Square3Stack3DIcon,
-      // desc: <DashBoardComponent selectedTab={selectedTab}/>,
+      desc: <DashBoardComponent selectedTab={selectedTab}/>,
     },
     {
       label: "Customers",
       value: "customers",
       icon: UserCircleIcon,
-      // desc: <UserTable selectedTab={selectedTab}/>,
+      desc: <UserTable selectedTab={selectedTab}/>,
     },
     {
       label: "Shop-Owners",
       value: "shopOwners",
       icon: PhotoIcon,
-      // desc: <PostTable selectedTab={selectedTab}/>,
+      desc: <UserTable selectedTab={selectedTab}/>,
     },
     {
       label: "Catergories",
@@ -62,14 +65,14 @@ const AdminDashboard = () => {
       label: "Products",
       value: "products",
       icon: ChatBubbleLeftRightIcon,
-      // desc: <ReportedComments selectedTab={selectedTab}/>,
+       desc: <ProductList selectedTab={selectedTab}/>,
     },
-    {
-      label: "Offers",
-      value: "offers",
-      icon: ChatBubbleLeftRightIcon,
-      // desc: <ReportedComments selectedTab={selectedTab}/>,
-    },
+    // {
+    //   label: "Offers",
+    //   value: "offers",
+    //   icon: ChatBubbleLeftRightIcon,
+    //   // desc: <ReportedComments selectedTab={selectedTab}/>,
+    // },
   ];
 
   const logout = () => {

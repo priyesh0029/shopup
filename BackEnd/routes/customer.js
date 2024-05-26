@@ -5,7 +5,7 @@ const customerRouter = (router) => {
   router.get("/getcategory", adminController.getCategory);
   router.post("/savelocation", customerControllers.saveUserLocation);
   router.get('/getuserproducts/:catId',customerControllers.getUserProductsList)
-  // router.get('/getallproducts/:catId',()=>console.log("customer enterd router"))
+  router.get('/search',customerControllers.getallProductSearch)
 
 
 

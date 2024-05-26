@@ -32,6 +32,12 @@ importers:
       formik:
         specifier: ^2.4.6
         version: 2.4.6(react@18.3.1)
+      highcharts:
+        specifier: ^11.1.0
+        version: 11.4.3
+      highcharts-react-official:
+        specifier: ^3.2.1
+        version: 3.2.1(highcharts@11.4.3)(react@18.3.1)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1238,6 +1244,15 @@ packages:
 
   hey-listen@1.0.8:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
+
+  highcharts-react-official@3.2.1:
+    resolution: {integrity: sha512-hyQTX7ezCxl7JqumaWiGsroGWalzh24GedQIgO3vJbkGOZ6ySRAltIYjfxhrq4HszJOySZegotEF7v+haQ75UA==}
+    peerDependencies:
+      highcharts: '>=6.0.0'
+      react: '>=16.8.0'
+
+  highcharts@11.4.3:
+    resolution: {integrity: sha512-rMmvYvcdwyUVfnRPfiZ0PnW6TgVhoS0FTBI8fc4Fp8l8ocoC9dMecvxS6E6tm7h7LrnSGoEo3b/0IRHuLatD2w==}
 
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
@@ -3346,6 +3361,13 @@ snapshots:
       function-bind: 1.1.2
 
   hey-listen@1.0.8: {}
+
+  highcharts-react-official@3.2.1(highcharts@11.4.3)(react@18.3.1):
+    dependencies:
+      highcharts: 11.4.3
+      react: 18.3.1
+
+  highcharts@11.4.3: {}
 
   hoist-non-react-statics@3.3.2:
     dependencies:

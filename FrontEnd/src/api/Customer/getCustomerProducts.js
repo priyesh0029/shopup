@@ -17,3 +17,18 @@ export const fetchCustomerProducts = async (catId) => {
       toast.error("Error fetching products.please refresh the page!")
     }
   };
+
+
+  //to search products in customer dashboard using regex
+
+  export const searchUser = async (product) => {
+    try {
+      const response = await baseURL.get(`customer/search?product=${product}`);
+      if (response.data.success) {
+        console.log("response of search product : ", response.data.data);
+        return response.data.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };

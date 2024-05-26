@@ -7,6 +7,10 @@ const shopOwnerSchema = new mongoose.Schema({
   email: String,
   role : String,
   address:String,
+  isBlock: {
+    type: Boolean,
+    default: false,
+  },
   location: {
     type: { type: String, enum: ['Point'], required: true },
     coordinates: { type: [Number], required: true }

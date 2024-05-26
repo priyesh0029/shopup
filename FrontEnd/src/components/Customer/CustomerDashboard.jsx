@@ -5,13 +5,31 @@ import axios from "axios";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { saveUserLocation } from "../../api/Customer/customerCategory";
+import { searchUser } from "../../api/Customer/getCustomerProducts";
+import UserProductPage from "../Product/UserProductPage";
 
-const key = process.env.GOOGLE_API_KEY
+const key = process.env.GOOGLE_API_KEY;
 
 const CustomerDashboard = () => {
   const [location, setLocation] = useState({});
   const [error, setError] = useState(null);
-  const [address, setAddress] = useState("")
+  const [address, setAddress] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleInput = (e) => {
+    setSearchText(e.target.value);
+    if (e.target.value === "") {
+      setSearchResults([]);
+    } else {
+      getSearchData(e.target.value);
+    }
+  };
+
+  const getSearchData = async (search) => {
+    const data = await searchUser(search);
+    setSearchResults(data);
+  };
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -19,10 +37,12 @@ const CustomerDashboard = () => {
         (position) => {
           console.log("position.coords : ", position.coords);
           const { latitude, longitude } = position.coords;
-          console.log("rds.position.coords.lat : ", latitude, longitude );
+          console.log("rds.position.coords.lat : ", latitude, longitude);
           if (latitude && longitude) {
-            setLocation(()=>{ latitude, longitude });
-            saveLocation({ latitude, longitude })
+            setLocation(() => {
+              latitude, longitude;
+            });
+            saveLocation({ latitude, longitude });
             fetchAddress(latitude, longitude);
           } else {
             setError("Unable to retrieve latitude and longitude.");
@@ -31,7 +51,7 @@ const CustomerDashboard = () => {
         },
         (err) => {
           setError(err.message);
-          toast.error(err.message)
+          toast.error(err.message);
         },
         {
           enableHighAccuracy: true, // Request high accuracy
@@ -41,18 +61,18 @@ const CustomerDashboard = () => {
       );
     } else {
       setError("Geolocation is not supported by this browser.");
-      toast.error("Geolocation is not supported by this browser.")
+      toast.error("Geolocation is not supported by this browser.");
     }
   }, []);
 
-  const saveLocation = async(locationCoord)=>{
-    const response = await saveUserLocation(locationCoord)
-    if(response.success){
+  const saveLocation = async (locationCoord) => {
+    const response = await saveUserLocation(locationCoord);
+    if (response.success) {
       // toast.success(response.message)
-    }else{
+    } else {
       toast.error(response.message);
     }
-  }
+  };
 
   const fetchAddress = async (latitude, longitude) => {
     try {
@@ -60,7 +80,7 @@ const CustomerDashboard = () => {
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyCx9albDirot3IabDjW03Nox1BYy0e-KZY`
       );
       const data = response.data;
-      console.log("dta.results of address : ",response);
+      console.log("dta.results of address : ", response);
       if (data.results && data.results.length > 0) {
         setAddress(data.results[0].formatted_address);
       } else {
@@ -86,9 +106,11 @@ const CustomerDashboard = () => {
           width: "100vw", // Ensures the div takes full viewport width
         }}
       >
-       { address.length > 0 && (<div>
-          <p>You are at location : {address}</p>
-        </div>)}
+        {address.length > 0 && (
+          <div>
+            <p>You are at location : {address}</p>
+          </div>
+        )}
         <div className="flex flex-col gap-3 justify-center items-center mt-10">
           <p className="font-bold text-4xl text-black">FIND WHAT YOU NEED</p>
           <div className="flex justify-center items-center">
@@ -105,13 +127,21 @@ const CustomerDashboard = () => {
             placeholder="Search here..."
             className="text-black "
             success
+            value={searchText}
+            onChange={handleInput}
           />
         </div>
       </div>
 
-      <div className="w-full h-full">
-        <CategoryPage role={"customer"} />
-      </div>
+      {searchResults.length !== 0 ? (
+         <div className="mx-10">
+         <UserProductPage products={searchResults}/>
+       </div>
+      ) : (
+        <div className="w-full h-full">
+          <CategoryPage role={"customer"} />
+        </div>
+      )}
     </div>
   );
 };

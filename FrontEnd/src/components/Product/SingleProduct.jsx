@@ -24,13 +24,10 @@ import {
 const SingleProduct = (props) => {
     const {
       _id,
-      postedUser,
       imgNames,
       description,
       createdAt,
       caption,
-      allPost,
-      setAllPost,
     } = props;
   
     const [viewPost, setviewPost] = useState(false);
@@ -61,7 +58,6 @@ const SingleProduct = (props) => {
                 <div className="flex justify-between px-2">
                  <div className="flex">
                  <UserCircleIcon className="h-10 w-10 text-gray-700" />
-                  <p className="text-md font-bold">{postedUser} .</p>
                  </div>
                   <div className="flex ">
                     <p className="text-sm p-1">

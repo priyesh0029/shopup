@@ -14,9 +14,9 @@ import {
   clearMedia,
   setCaption,
   setMedia,
-} from "../../Features/redux/slices/shopOwner/postSlice";
+} from "../../../Features/redux/slices/shopOwner/postSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { creatCategotry } from "../../api/Admin/adminCategoty";
+import { creatCategotry } from "../../../api/Admin/adminCategoty";
 
 const AddCategoryModal = ({ open, setOpen, handleOpen,setcategories ,categories}) => {
   const [imageSelect, setimageSelect] = useState(false);

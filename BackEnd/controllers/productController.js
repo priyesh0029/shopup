@@ -57,7 +57,7 @@ export const productController = {
     }
   }),
 
-  //TO GET ALL POSTS
+  //TO GET getAllproducts
 
   getAllproducts: asyncHandler(async (req, res) => {
     try {
@@ -87,6 +87,7 @@ export const productController = {
               {
                 shopOwnerId: user.username,
                 categoryId: catId,
+                isDeleted :false
               },
           },
         ]

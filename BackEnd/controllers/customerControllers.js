@@ -72,6 +72,7 @@ export const customerControllers = {
       const radiusInRadians = radiusInKm / 6378.1;
     
       const products = await ShopOwner.aggregate([
+       
         {
           $geoNear: {
             near: {
@@ -81,6 +82,9 @@ export const customerControllers = {
             distanceField: 'distance',
             maxDistance: radiusInRadians * 6378.1 * 1000,
             spherical: true,
+            query: {
+              isBlock: false,
+            },
           },
         },
         {
@@ -90,6 +94,7 @@ export const customerControllers = {
             },
           },
         },
+       
         {
           $lookup: {
             from: 'products',
@@ -104,21 +109,9 @@ export const customerControllers = {
         {
           $match: {
             'products.categoryId': catId,
+            'products.isDeleted' :false
           },
         },
-        // {
-        //   $group: {
-        //     _id: '$_id',
-        //     name: { $first: '$name' },
-        //     number: { $first: '$number' },
-        //     email: { $first: '$email' },
-        //     address: { $first: '$address' },
-        //     location: { $first: '$location.coordinates' },
-        //     createdAt: { $first: '$createdAt' },
-        //     distanceInKm: { $first: '$distanceInKilometers' },
-        //     products: { $push: '$products' },
-        //   },
-        // },
         {
           $project: {
             _id: 1,
@@ -155,5 +148,98 @@ export const customerControllers = {
       });
     }
     
+  }),
+
+  //to get all product search
+
+  getallProductSearch: expressAsyncHandler(async (req, res) => {
+    try {
+      const userId = req.query.userId;
+      const {product} = req.query
+      const userID = new mongoose.Types.ObjectId(userId);
+      const user = await User.findOne({ _id: userID }, { _id: 0, location: 1 });
+    
+      if (!user || !user.location) {
+        throw new Error('User location not found');
+      }
+    
+      const radiusInKm = 10;
+      const radiusInRadians = radiusInKm / 6378.1;
+
+      const products = await ShopOwner.aggregate([
+       
+        {
+          $geoNear: {
+            near: {
+              type: 'Point',
+              coordinates: user.location.coordinates
+            },
+            distanceField: 'distance',
+            maxDistance: radiusInRadians * 6378.1 * 1000,
+            spherical: true,
+            query: {
+              isBlock: false,
+            },
+          },
+        },
+        {
+          $addFields: {
+            distanceInKilometers: {
+              $divide: ['$distance', 1000],
+            },
+          },
+        },
+       
+        {
+          $lookup: {
+            from: 'products',
+            localField: 'username',
+            foreignField: 'shopOwnerId',
+            as: 'products',
+          },
+        },
+        {
+          $unwind: '$products' 
+        },
+        {
+          $match: {
+            'products.isDeleted' :false,
+            'products.caption': { $regex: product, $options: 'i' },
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            name: 1,
+            number: 1,
+            email: 1,
+            address: 1,
+            location: "$location.coordinates",
+            createdAt: 1,
+            distanceInKm: "$distanceInKilometers",
+            productId: "$products._id",
+            shopOwnerUname: "$products.shopOwnerId",
+            categoryId: "$products.categoryId",
+            caption: "$products.caption",
+            description: "$products.description",
+            price: "$products.price",
+            imgNames: "$products.imgNames",
+            productCreatedAt: "$products.createdAt",
+          },
+        },
+      ]);
+    
+      console.log("result of userpage products after aggrgation : ",products);
+      return res.status(201).json({
+        success: true,
+        message: "fetch categories successfully",
+        data: products,
+      });
+    } catch (error) {
+      console.error("Error gettig cat:", error);
+      return res
+        .status(500)
+        .json({ success: false, message: "Internal server error" });
+    }
   }),
 };

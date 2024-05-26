@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
   number: String,
   email: String,
   role : String,
+  isBlock: {
+    type: Boolean,
+    default: false,
+  },
   location: {
     type: { type: String, enum: ['Point'], required: true },
     coordinates: { type: [Number], required: true }
