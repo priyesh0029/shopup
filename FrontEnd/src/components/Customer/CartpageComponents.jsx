@@ -25,6 +25,7 @@ const CartpageComponents = () => {
   const [products, setproducts] = useState([]);
   const [price, setprice] = useState("");
   const [open, setopen] = useState(false)
+  const [discount, setdiscount] = useState('')
 
   useEffect(() => {
     handleGetCartListDetails();
@@ -168,9 +169,9 @@ const CartpageComponents = () => {
                 </div>
                 <div className="flex items-center flex-col justify-center rounded-xl border border-gray-400 h-full">
                   <div className="flex flex-col items-start justify-start w-full p-24 h-full">
-                    <p className="text-black text-xl">Total Price: $ {price}</p>
-                    <p className="text-black text-xl">Coupon Applied: $ {price}</p>
-                    <p className="text-black text-xl">Grand Total: $ {price}</p>
+                    <p className="text-black text-lg">Total Price: $ {price}</p>
+                    <p className="text-black text-lg">Coupon Applied: $ {discount}</p>
+                    <p className="text-black text-lg">Grand Total:$ { discount ? Number(price)-Number(discount):price}</p>
                   <Button className="bg-blue-700 my-10">Proceed to checkout</Button>
                   </div>
                 </div>
@@ -180,7 +181,7 @@ const CartpageComponents = () => {
         </CardBody>
       </Card>
       {open && (
-        <CouponModal handleOpen={handleOpen} open={open}/>
+        <CouponModal handleOpen={handleOpen} open={open} setdiscount={setdiscount}/>
       )}
     </>
   );

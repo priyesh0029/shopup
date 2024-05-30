@@ -1,28 +1,34 @@
-import React from "react";
-import {
-  Button,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
- 
-const CouponModal = ({handleOpen,open})=> {
- 
- 
-  return (
-    <>
-      <Dialog open={open} handler={handleOpen}>
-        <DialogHeader>Its a simple dialog.</DialogHeader>
-        <DialogBody>
-          The key to more success is to have a lot of pillows. Put it this way,
-          it took me twenty five years to get these plants, twenty five years of
-          blood sweat and tears, and I&apos;m never giving up, I&apos;m just
-          getting started. I&apos;m up to something. Fan luv.
-        </DialogBody>
-      </Dialog>
-    </>
-  );
-}
+import { Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
+import React from 'react';
 
-export default CouponModal
+const generatePromoCode = () => {
+  return Math.random().toString(36).substring(2, 8).toUpperCase();
+};
+
+const CouponModal = ({ open, handleOpen,setdiscount }) => {
+  const promoCode1 = generatePromoCode();
+  const promoCode2 = generatePromoCode();
+
+  const handlePrice  = (dis)=>{
+    setdiscount(()=> dis)
+    handleOpen()
+  }
+
+  return (
+    <Dialog open={open} handler={handleOpen}>
+      <DialogHeader>Coupons</DialogHeader>
+      <DialogBody>
+        <div onClick={()=>handlePrice(10)} style={{ border: '1px solid black', padding: '10px', margin: '10px 0' }}>
+          <h4>Promo Code: {promoCode1}</h4>
+          <p>Get $10 off your purchase!</p>
+        </div>
+        <div onClick={()=>handlePrice(10)}style={{ border: '1px solid black', padding: '10px', margin: '10px 0' }}>
+          <h4>Promo Code: {promoCode2}</h4>
+          <p>Get $15 off your purchase!</p>
+        </div>
+      </DialogBody>
+    </Dialog>
+  );
+};
+
+export default CouponModal;

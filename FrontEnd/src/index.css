@@ -8,6 +8,11 @@ body {
   
 }
 
+/* Add this CSS to your styles */
+.pac-container {
+  z-index: 1050 !important; /* Ensure the suggestions dropdown is above the dialog */
+}
+
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

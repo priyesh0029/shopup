@@ -25,6 +25,7 @@ import Categories from "../AdminCategory/Categories";
 import DashBoardComponent from "./DashboardComponent";
 import UserTable from "../UserList/UserTable";
 import ProductList from "../ProductList/ProductList";
+import OfferTable from "../Offers/OfferList";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -67,12 +68,13 @@ const AdminDashboard = () => {
       icon: ChatBubbleLeftRightIcon,
        desc: <ProductList selectedTab={selectedTab}/>,
     },
-    // {
-    //   label: "Offers",
-    //   value: "offers",
-    //   icon: ChatBubbleLeftRightIcon,
-    //   desc: <ReportedComments selectedTab={selectedTab}/>,
-    // },
+    {
+      label: "Offers",
+      value: "offers",
+      icon: ChatBubbleLeftRightIcon,
+      desc: <OfferTable selectedTab={selectedTab}/>,
+    },
+    
   ];
 
   const logout = () => {
