@@ -35,6 +35,10 @@ const CartpageComponents = () => {
     setTABLE_ROWS(response.cartlist);
   };
 
+  const handlePrice = ()=>{
+    TABLE_ROWS.reduce
+  }
+
   return (
     <>
       <Card className="h-full w-full">
@@ -54,84 +58,89 @@ const CartpageComponents = () => {
           {TABLE_ROWS.length < 0 ? (
             <div>cart empty</div>
           ) : (
-            <table className="mt-4 w-full min-w-max table-auto text-left">
-              <thead>
-                <tr>
-                  {TABLE_HEAD.map((head) => (
-                    <th
-                      key={head}
-                      className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
-                    >
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal leading-none opacity-70"
+            <>
+              <table className="mt-4 w-full min-w-max table-auto text-left">
+                <thead>
+                  <tr>
+                    {TABLE_HEAD.map((head) => (
+                      <th
+                        key={head}
+                        className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
                       >
-                        {head}
-                      </Typography>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {TABLE_ROWS.map(
-                  ({ _id, caption, price, imgNames, quantity }, index) => {
-                    const isLast = index === TABLE_ROWS.length - 1;
-                    const classes = isLast
-                      ? "p-4"
-                      : "p-4 border-b border-blue-gray-50";
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal leading-none opacity-70"
+                        >
+                          {head}
+                        </Typography>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {TABLE_ROWS.map(
+                    ({ _id, caption, price, imgNames, quantity }, index) => {
+                      const isLast = index === TABLE_ROWS.length - 1;
+                      const classes = isLast
+                        ? "p-4"
+                        : "p-4 border-b border-blue-gray-50";
 
-                    return (
-                      <tr key={_id}>
-                        <td className={classes}>
-                          <div className="flex flex-col ">
-                            <Avatar
-                              src={PRODUCT_URL + `${imgNames[0]}.jpg`}
-                              alt="image"
-                              size="lg"
-                              variant="rounded"
-                            />
-                          </div>
-                        </td>
-                        <td className={classes}>
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {caption}
-                            </Typography>
-                          </div>
-                        </td>
-                        <td className={classes}>
-                          <div className="flex flex-col ">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {quantity}
-                            </Typography>
-                          </div>
-                        </td>
-                        <td className={classes}>
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              $ {price}
-                            </Typography>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  }
-                )}
-              </tbody>
-            </table>
+                      return (
+                        <tr key={_id}>
+                          <td className={classes}>
+                            <div className="flex flex-col ">
+                              <Avatar
+                                src={PRODUCT_URL + `${imgNames[0]}.jpg`}
+                                alt="image"
+                                size="lg"
+                                variant="rounded"
+                              />
+                            </div>
+                          </td>
+                          <td className={classes}>
+                            <div className="flex flex-col">
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                {caption}
+                              </Typography>
+                            </div>
+                          </td>
+                          <td className={classes}>
+                            <div className="flex flex-col ">
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                {quantity}
+                              </Typography>
+                            </div>
+                          </td>
+                          <td className={classes}>
+                            <div className="flex flex-col">
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                $ {price}
+                              </Typography>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    }
+                  )}
+                </tbody>
+              </table>
+              <div className="flex justify-end">
+                <p>Total Amount : {handlePrice}</p>
+              </div>
+            </>
           )}
         </CardBody>
       </Card>
