@@ -105,11 +105,6 @@ const AddCategoryModal = ({ open, setOpen, handleOpen,setcategories ,categories}
           <div className="relative group h-96 w-96 ">
             {imageArr.length !== 0 ? (
               <img
-                //   src={
-                //     Object.keys(initialData).length !== 0
-                //       ? POST_URL + `${pic}`
-                //       : URL.createObjectURL(pic)
-                //   }
                 src={URL.createObjectURL(imageArr[0])}
                 alt="image 1"
                 className="h-full w-full object-contain"

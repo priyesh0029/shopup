@@ -16,12 +16,15 @@ import {
 import { useEffect, useState } from "react";
 import { PRODUCT_URL } from "../../constants/mainUrls";
 import { getCartListDetails } from "../../api/Customer/customerCartconnections";
+import CouponModal from "./CouponModal";
 
 const TABLE_HEAD = ["Product Image", "Product Name", "Quantity", "Price"];
 
 const CartpageComponents = () => {
   const [TABLE_ROWS, setTABLE_ROWS] = useState([]);
   const [products, setproducts] = useState([]);
+  const [price, setprice] = useState("");
+  const [open, setopen] = useState(false)
 
   useEffect(() => {
     handleGetCartListDetails();
@@ -33,10 +36,22 @@ const CartpageComponents = () => {
 
     setproducts(response.cartlist);
     setTABLE_ROWS(response.cartlist);
+    handlePrice();
   };
 
-  const handlePrice = ()=>{
-    TABLE_ROWS.reduce
+  const handlePrice = () => {
+    if (TABLE_ROWS.length > 0) {
+      const Tprice = TABLE_ROWS.reduce((acc, cur) => {
+        acc = acc + cur.price;
+        return acc;
+      }, 0);
+      console.log("total price  : ", Tprice);
+      setprice(() => Tprice);
+    }
+  };
+
+  const handleOpen = ()=>{
+    setopen(!open)
   }
 
   return (
@@ -80,14 +95,17 @@ const CartpageComponents = () => {
                 </thead>
                 <tbody>
                   {TABLE_ROWS.map(
-                    ({ _id, caption, price, imgNames, quantity }, index) => {
+                    (
+                      { _id, caption, price, imgNames, quantity, productId },
+                      index
+                    ) => {
                       const isLast = index === TABLE_ROWS.length - 1;
                       const classes = isLast
                         ? "p-4"
                         : "p-4 border-b border-blue-gray-50";
 
                       return (
-                        <tr key={_id}>
+                        <tr key={productId}>
                           <td className={classes}>
                             <div className="flex flex-col ">
                               <Avatar
@@ -137,13 +155,33 @@ const CartpageComponents = () => {
                   )}
                 </tbody>
               </table>
-              <div className="flex justify-end">
-                <p>Total Amount : {handlePrice}</p>
+              <div className="flex justify-end mr-5">
+                <p className="text-2xl text-black">Total Amount : $ {price}</p>
+              </div>
+              <div className="flex justify-evenly mt-32 w-full h-full ">
+                <div className="flex flex-col items-start justify-start gap-2 p-32">
+                <p className="text-green-500 " onClick={handleOpen}>view coupons</p>
+                  <div className="flex items-center justify-start gap-2">
+                  <Input label="coupon code" size="lg" className="flex-1" />
+                  <Button className="bg-blue-700">Apply</Button>
+                  </div>
+                </div>
+                <div className="flex items-center flex-col justify-center rounded-xl border border-gray-400 h-full">
+                  <div className="flex flex-col items-start justify-start w-full p-24 h-full">
+                    <p className="text-black text-xl">Total Price: $ {price}</p>
+                    <p className="text-black text-xl">Coupon Applied: $ {price}</p>
+                    <p className="text-black text-xl">Grand Total: $ {price}</p>
+                  <Button className="bg-blue-700 my-10">Proceed to checkout</Button>
+                  </div>
+                </div>
               </div>
             </>
           )}
         </CardBody>
       </Card>
+      {open && (
+        <CouponModal handleOpen={handleOpen} open={open}/>
+      )}
     </>
   );
 };

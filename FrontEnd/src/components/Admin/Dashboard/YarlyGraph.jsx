@@ -45,7 +45,7 @@ const YearlyGraph = () => {
       type: 'line', // Specify the chart type as 'line'
     },
     title: {
-      text: 'Yearly graph showing users and post',
+      text: 'Yearly graph showing users and shop owners',
       align: 'left',
     },
     xAxis: {
