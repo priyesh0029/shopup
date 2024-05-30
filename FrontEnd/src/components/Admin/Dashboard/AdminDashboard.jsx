@@ -67,12 +67,12 @@ const AdminDashboard = () => {
       icon: ChatBubbleLeftRightIcon,
        desc: <ProductList selectedTab={selectedTab}/>,
     },
-    {
-      label: "Offers",
-      value: "offers",
-      icon: ChatBubbleLeftRightIcon,
-      desc: <ReportedComments selectedTab={selectedTab}/>,
-    },
+    // {
+    //   label: "Offers",
+    //   value: "offers",
+    //   icon: ChatBubbleLeftRightIcon,
+    //   desc: <ReportedComments selectedTab={selectedTab}/>,
+    // },
   ];
 
   const logout = () => {
