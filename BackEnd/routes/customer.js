@@ -6,6 +6,10 @@ const customerRouter = (router) => {
   router.post("/savelocation", customerControllers.saveUserLocation);
   router.get('/getuserproducts/:catId',customerControllers.getUserProductsList)
   router.get('/search',customerControllers.getallProductSearch)
+  router.post("/addtocart", customerControllers.addToCart);
+  router.get('/cartlist',customerControllers.getallCartList)
+
+
 
 
 

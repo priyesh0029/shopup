@@ -17,13 +17,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearToken } from "../../Features/redux/slices/user/tokenSlice";
 import { clearUserInfo } from "../../Features/redux/slices/user/homeSlice";
 import { POST_URL2 } from "../../constants/mainUrls";
+import { ShoppingBagIcon } from "@heroicons/react/20/solid";
+import { useNavigate } from "react-router-dom";
 
 const NavBarComp = () => {
   const dispatch = useDispatch();
   const [openNav, setOpenNav] = React.useState(false);
-  const user = useSelector(
-    (store) => store.home.userInfo
-  );
+  const user = useSelector((store) => store.home.userInfo);
+  const [itemCount, setitemCount] = useState(user.cart);
 
   React.useEffect(() => {
     window.addEventListener(
@@ -35,11 +36,16 @@ const NavBarComp = () => {
   const handleOpen = () => setOpen(!open);
 
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate()
 
   const handleLogout = () => {
     dispatch(clearToken());
     dispatch(clearUserInfo());
   };
+
+  const openCart = ()=>{
+    navigate('/usercart')
+  }
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -72,6 +78,18 @@ const NavBarComp = () => {
           </MenuList>
         </Menu>
       </Typography>
+      <Typography onClick={openCart}>
+        <div className="relative">
+          <button className="relative flex items-center justify-center w-10 h-10 bg-blue-600 rounded-full">
+            <ShoppingBagIcon className="h-6 w-6 text-white" />
+            {itemCount > 0 && (
+              <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+                {itemCount}
+              </span>
+            )}
+          </button>
+        </div>
+      </Typography>
     </ul>
   );
 
@@ -81,16 +99,16 @@ const NavBarComp = () => {
       fullWidth={true}
     >
       <div className="container mx-auto flex flex-wrap items-center justify-between text-blue-gray-900">
-       <div className="w-36 h-16 ">
-            <img
-              className="border rounded-xl w-full h-full"
-              src={POST_URL2}
-              alt="logo"
-            />
-          </div>
+        <div className="w-36 h-16 ">
+          <img
+            className="border rounded-xl w-full h-full"
+            src={POST_URL2}
+            alt="logo"
+          />
+        </div>
 
         {/* <div className="hidden items-center gap-x-2 lg:flex"> */}
-          {/* <div className="relative flex w-full gap-2 md:w-max">
+        {/* <div className="relative flex w-full gap-2 md:w-max">
             <Input
               type="search"
               placeholder="Search"
@@ -124,7 +142,7 @@ const NavBarComp = () => {
               </svg>
             </div>
           </div> */}
-          
+
         {/* </div> */}
         {/* <div className="hidden lg:block">{navList}</div> */}
         {/* <Button color="blue" size = {"sm"} onClick={handleOpen}>SELL</Button> */}
@@ -165,7 +183,7 @@ const NavBarComp = () => {
             </svg>
           )}
         </IconButton> */}
-          <div className="hidden lg:block">{navList}</div>
+        <div className="hidden lg:block">{navList}</div>
       </div>
       {/* <Collapse open={openNav}>
         <div className="container mx-auto">

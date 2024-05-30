@@ -60,6 +60,7 @@ export const shopLogin = async (userData) => {
             name: response.data.data.user.name,
             userName: response.data.data.user.username,
             email: response.data.data.user.email,
+           
           },
         },
       };
@@ -101,6 +102,7 @@ export const register = async (userData )=> {
               name: response.data.data.user.name,
               userName: response.data.data.user.username,
               email: response.data.data.user.email,
+              cart: response.data.data.user.cart.length,
             },
           },
         };
@@ -140,6 +142,8 @@ export const register = async (userData )=> {
               name: response.data.data.user.name,
               userName: response.data.data.user.username,
               email: response.data.data.user.email,
+              cart: response.data.data.user.cart.length,
+
             },
           },
         };

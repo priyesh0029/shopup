@@ -6,10 +6,12 @@ import { getAllProducts } from "../../api/ShopOwner/shopOwnerProduct";
 import SingleProduct from "./SingleProduct";
 import { fetchCustomerProducts } from "../../api/Customer/getCustomerProducts";
 import UserProductPage from "./UserProductPage";
+import { Select,Option } from "@material-tailwind/react";
 
 const ProductPage = ({ category, catId, role }) => {
   const [allPost, setAllPost] = useState([]);
   const [open, setopen] = useState(false);
+  const [sortType, setSortType] = useState("")
   const dispatch = useDispatch();
   const newPost = useSelector((store) => store.createPost.newPost);
   console.log("newPost redux : ", newPost, category, catId);
@@ -53,6 +55,27 @@ const ProductPage = ({ category, catId, role }) => {
     setopen(!open);
   };
 
+  //sorting function
+  useEffect(() => {
+    if (sortType && allPost.length !== 0) {
+      let sortedPosts = [...allPost]; // Create a shallow copy of the array
+
+      if (sortType === "low_high") {
+        sortedPosts.sort((a, b) => a.price - b.price);
+      } else if (sortType === "high_low") {
+        sortedPosts.sort((a, b) => b.price - a.price);
+      } else if (sortType === "nearest") {
+        sortedPosts.sort((a, b) => a.distanceInKm - b.distanceInKm);
+      }
+
+      setAllPost(sortedPosts);
+    }
+  }, [sortType]);
+  
+  const handleSortChange = (val) => {
+    setSortType(val);
+  };
+
   return (
     <div className="flex flex-col w-full h-full justify-center">
       {role === "shop" ? (
@@ -65,10 +88,21 @@ const ProductPage = ({ category, catId, role }) => {
           </button>
         </div>
       ) : (
-        <div className="flex justify-start m-14">
+        <div className="flex justify-between m-14">
           <p className="font-semibold text-2xl text-black">
             {category} near you
           </p>
+          <div className="w-18">
+            <Select
+              label="Sort by"
+              value={sortType}
+              onChange={(val)=> handleSortChange(val)}
+            >
+              <Option value="low_high">Price (low-high)</Option>
+              <Option value="high_low">Price (high-low)</Option>
+              <Option value="nearest">Nearest</Option>
+            </Select>
+          </div>
         </div>
       )}
       {role === "shop" && (
@@ -86,9 +120,9 @@ const ProductPage = ({ category, catId, role }) => {
           </div>
         </div>
       )}
-      {role === "customer" && allPost.length !== 0 &&(
+      {role === "customer" && allPost.length !== 0 && (
         <div className="mx-10">
-          <UserProductPage products={allPost}/>
+          <UserProductPage products={allPost} />
         </div>
       )}
       {open && (

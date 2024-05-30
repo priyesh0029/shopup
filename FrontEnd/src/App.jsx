@@ -11,6 +11,7 @@ import AdminHome from "./pages/Admin/AdminHome";
 import ShopOwnerProductPage from "./pages/ShopOwner/ShopOwnerProductPage";
 import CustomerProductPage from "./pages/Home/CustomerProductPage";
 import ProductViewPage from "./pages/Home/ProductViewPage";
+import CartPage from "./pages/Home/CartPage";
 
 const libraries = ["places", "maps", "geometry"];
 
@@ -49,6 +50,7 @@ const App = () => {
             path="/productviewpage/:product"
             element={token ? <ProductViewPage /> : <LoginForm />}
           />
+          <Route path="/usercart" element={token ? <CartPage /> : <LoginForm />} />
           {/* shopOwnerRoutes */}
           <Route
             path="/shopdashboard"

@@ -6,13 +6,17 @@ const userSchema = new mongoose.Schema({
   number: String,
   email: String,
   role : String,
+  cart :  {
+    type: [{productId : String, count:Number}],
+    required: true,
+  },
   isBlock: {
     type: Boolean,
     default: false,
   },
   location: {
-    type: { type: String, enum: ['Point'], required: true },
-    coordinates: { type: [Number], required: true }
+    type: { type: String, enum: ['Point']},
+    coordinates: { type: [Number] }
   },
   password: String,
 },

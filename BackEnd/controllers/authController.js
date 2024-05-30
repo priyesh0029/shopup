@@ -87,12 +87,13 @@ export const authControllers = {
     res.status(201).json({
       success: true,
       data: {
-        user: (({ _id, name, username, number, email }) => ({
+        user: (({ _id, name, username, number, email,cart}) => ({
           _id,
           name,
           username,
           number,
           email,
+          cart
         }))(newUser),
         token,
       },
@@ -177,12 +178,13 @@ export const authControllers = {
     res.status(200).json({
       success: true,
       data: {
-        user: (({ _id, name, username, number, email }) => ({
+        user: (({ _id, name, username, number, email,cart }) => ({
           _id,
           name,
           username,
           number,
           email,
+          cart
         }))(user),
         token,
       },

@@ -11,7 +11,8 @@ const loadUserFromLocalStorage = () => {
       _id:"",
       name: "",
       userName: "",
-      email : ''
+      email : '',
+      cart :''
     };
   } catch (error) {
     console.log("Error loading user info from local storage:", error);
@@ -19,7 +20,8 @@ const loadUserFromLocalStorage = () => {
         _id:"",
         name: "",
         userName: "",
-        email : ''
+        email : '',
+        cart :''
     };
   }
 };
@@ -47,12 +49,22 @@ const homeSlice = createSlice({
         _id:"",
         name: "",
         userName: "",
-        email : ''
+        email : '',
+        cart :''
       };
       try {
         localStorage.removeItem("userInfo");
       } catch (error) {
         console.log("Error removing userInfo from local storage:", error);
+      }
+    },
+    //to add cart count 
+    CartCountManage : (state, action) => {
+      state.userInfo.cart = action.payload;
+      try {
+        localStorage.setItem("userInfo", JSON.stringify(state.userInfo));
+      } catch (error) {
+        console.log("Error storing userInfo in local storage:", error);
       }
     },
   },
@@ -61,5 +73,6 @@ const homeSlice = createSlice({
 export const {
   SetUserInfo,
   clearUserInfo,
+  CartCountManage
 } = homeSlice.actions;
 export default homeSlice.reducer;
